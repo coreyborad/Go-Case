@@ -11,8 +11,7 @@
     - [Channel](#channel)
     - [Channel Queue](#channel-queue)
     - [Worker Pool](#worker-pool)
-    - [Channel 4](#channel-4)
-    - [Channel 5](#channel-5)
+    - [Graceful shutdown](#graceful-shutdown)
 
 ## Case
 
@@ -39,3 +38,8 @@ ex 加油站有4個加油槽，這時候有20台車需要加油
 2. 每台車子加油的花費時間都不同，加完油離開，加油槽就會空掉，新的車子再補上
 3. 每台車都需要排隊等待加油，無法插隊
 
+### Graceful Shutdown
+
+讓服務關機之前，需等待剩餘的job做完後，才可以關閉。
+
+原理相當於去攔截os層signal要關閉的訊號，使其先暫停關閉，設定多等待的時間，讓剩餘job做完，再繼續讓signal往下跑
