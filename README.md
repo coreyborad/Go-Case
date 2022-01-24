@@ -10,7 +10,7 @@
     - [Simple Routine](#simple-routine)
     - [Channel](#channel)
     - [Channel Queue](#channel-queue)
-    - [Channel 3](#channel-3)
+    - [Worker Pool](#worker-pool)
     - [Channel 4](#channel-4)
     - [Channel 5](#channel-5)
 
@@ -27,4 +27,15 @@ go routine最基本的用法，此案例會一次生成20組go routine，搭配w
 ### Channel Queue
 
 Channel是具有queue的特性，可以設定buff跟unbuff，達到上限時就無法再往裡面推進
+
+### Worker Pool
+
+當大量的job進來時，可能會開啟過多的routine，如果不想要花費過多的資源，就必須去限制routine數量，這邊稱worker。
+
+當有新的job進來時，透過channel傳進去worker去做事情，worker都被佔用時，因為channel有queue的特性，因此需排隊等待worker被釋放，類似加油站排隊加油的案例。
+
+ex 加油站有4個加油槽，這時候有20台車需要加油
+1. 加油槽=worker數, 車子=job, 車道=job chan, 加油站站長辦公室報表機=result chan
+2. 每台車子加油的花費時間都不同，加完油離開，加油槽就會空掉，新的車子再補上
+3. 每台車都需要排隊等待加油，無法插隊
 
