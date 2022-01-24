@@ -15,7 +15,7 @@ func main() {
 			select {
 			case val := <-jobQueue:
 				fmt.Println("finished:", val)
-				time.Sleep(time.Second)
+				time.Sleep(time.Second * 5)
 			}
 		}
 	}(queue)
@@ -23,11 +23,9 @@ func main() {
 	fmt.Println(send(1, queue), 1)
 	time.Sleep(time.Second)
 	fmt.Println(send(2, queue), 2)
-	fmt.Println(send(3, queue), 3)
-	fmt.Println(send(4, queue), 4)
 	time.Sleep(time.Second)
 	fmt.Println(send(5, queue), 5)
-	time.Sleep(time.Second * 3)
+	time.Sleep(time.Second * 5)
 }
 
 func send(job int, jobChan chan<- int) bool {
